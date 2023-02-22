@@ -1,6 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import "../style.css";
 import Square from "./square.js";
 import Timer from "./timer.js";
 
@@ -22,7 +20,7 @@ class Container extends React.Component {
     this.state = {
       gameStatus: 0, // 0 init  / -1 Failed / -2 Successed,
       gameData: [[]],
-      best: 0
+      best: 0,
     };
   }
 
@@ -53,17 +51,14 @@ class Container extends React.Component {
     this.unlockCount = 0;
     let arr = Array.from(
       {
-        length: this.squaresCountX
+        length: this.squaresCountX,
       },
       () =>
         Array.from(
           {
-            length: this.squaresCountY
+            length: this.squaresCountY,
           },
-          () =>
-            Math.random() > 0.95
-              ? { value: -1, displayValue: "" }
-              : { value: 0, displayValue: "" }
+          () => (Math.random() > 0.95 ? { value: -1, displayValue: "" } : { value: 0, displayValue: "" })
         )
     );
 
@@ -97,14 +92,7 @@ class Container extends React.Component {
   updateZero(arr, visited, x, y) {
     let m = arr.length;
     let n = arr[0].length;
-    if (
-      x < 0 ||
-      y < 0 ||
-      x >= m ||
-      y >= n ||
-      visited[x][y] ||
-      arr[x][y].value !== 0
-    ) {
+    if (x < 0 || y < 0 || x >= m || y >= n || visited[x][y] || arr[x][y].value !== 0) {
       return;
     }
     this.unlockCount++;
@@ -125,7 +113,7 @@ class Container extends React.Component {
     let n = arr[0].length;
     let visited = Array(m)
       .fill()
-      .map(x => Array(n).fill(false));
+      .map((x) => Array(n).fill(false));
     this.updateZero(arr, visited, x, y);
     // arr
     // console.log(arr);
@@ -135,10 +123,7 @@ class Container extends React.Component {
     let arr = this.state.gameData;
     let element = arr[x][y];
     if (LeftOrRight === "left") {
-      if (
-        element.displayValue === 0 ||
-        (element.displayValue > 0 && element.displayValue < 5)
-      ) {
+      if (element.displayValue === 0 || (element.displayValue > 0 && element.displayValue < 5)) {
         return;
       }
       if (element.value === -1) {
@@ -177,9 +162,7 @@ class Container extends React.Component {
       for (let j = 0; j < n; j++) {
         res.push(
           <Square
-            onClick={(x, y, LeftOrRight) =>
-              this.squareClickHandler(x, y, LeftOrRight)
-            }
+            onClick={(x, y, LeftOrRight) => this.squareClickHandler(x, y, LeftOrRight)}
             gameStatus={this.state.gameStatus}
             key={[i, j]}
             index={[i, j]}
@@ -189,24 +172,18 @@ class Container extends React.Component {
         );
       }
     }
-    // const squares = arr.map((value, index) => (
-    //   <Square
-    //     action={this.actionHandler}
-    //     status={this.state.gameStatus}
-    //     key={index}
-    //     index={index}
-    //     value={value}
-    //   />
-    // ));
-    // console.log(res);
-    return res;
+    const squares = arr.map((value, index) => (
+      <Square action={this.actionHandler} status={this.state.gameStatus} key={index} index={index} value={value} />
+    ));
+    console.log(squares);
+    return squares;
   }
 
   reset() {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
         gameData: this.initGame(),
-        gameStatus: prevState.gameStatus + 1
+        gameStatus: prevState.gameStatus + 1,
       };
     });
   }
@@ -224,6 +201,7 @@ class Container extends React.Component {
 
   render() {
     console.log("render");
+    console.log(this.renderSquares());
     return (
       <>
         <div className="toolbar">

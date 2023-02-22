@@ -1,11 +1,11 @@
 import React from "react";
-import "../style.css";
+import "./square.css";
 
 class Square extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayValue: ""
+      displayValue: "",
     };
   }
   // componentDidUpdate(prevProps, prevState, snapshot) {
@@ -21,9 +21,7 @@ class Square extends React.Component {
       return;
     }
     // console.log(e.target);
-    let [x, y] = e.target.attributes
-      .getNamedItem("data-index")
-      .value.split(",");
+    let [x, y] = e.target.attributes.getNamedItem("data-index").value.split(",");
     if (e.type === "click") {
       // let value = e.target.attributes.getNamedItem("data-value").value;
       this.props.onClick(x / 1, y / 1, "left");
@@ -61,8 +59,8 @@ class Square extends React.Component {
         data-value={this.props.value}
         // style={styles}
         data-index={this.props.index}
-        onClick={e => this.click(e)}
-        onContextMenu={e => this.click(e)}
+        onClick={(e) => this.click(e)}
+        onContextMenu={(e) => this.click(e)}
       >
         {this.display()}
       </div>

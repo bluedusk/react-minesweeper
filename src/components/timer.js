@@ -1,11 +1,10 @@
 import React from "react";
-import "../style.css";
 
 class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      time: 0
+      time: 0,
     };
   }
 

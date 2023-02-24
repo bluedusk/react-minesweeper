@@ -1,16 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Square } from "./Square";
-import { initGame } from "./utils";
+import { initGame, shallowClone2DArray, updateZero, gameOver } from "./utils";
 import "./styles.css";
+import clsx from "clsx";
+import { Toolbar } from "./Toolbar";
 
 export const Container = () => {
   //   const initSquares = Array(500).fill(1);
-  const [squares, setSquares] = React.useState([]);
+  const [squares, setSquares] = useState([]);
+  // 0: not started, 1: playing, 2: game over, 3: game win
+  const [gameStatus, setGameStatus] = useState(1);
 
   useEffect(() => {
     // init game board
-    setSquares(initGame());
-  }, []);
+    if (gameStatus === 0) {
+      setGameStatus(1);
+      setSquares(initGame());
+    }
+  }, [gameStatus]);
+
+  const squareClickHandler = (squares, x, y) => {
+    const newSquares = shallowClone2DArray(squares);
+    if (squares[x][y].value === -1) {
+      // game over
+      gameOver(newSquares);
+      setGameStatus(2);
+    } else {
+      console.log("zzzzz--------------->", { x, y });
+      updateZero(newSquares, x, y);
+    }
+
+    setSquares(newSquares);
+  };
 
   const renderSquares = () => {
     //console.log("render");
@@ -24,6 +45,7 @@ export const Container = () => {
         res.push(
           <Square
             // onClick={(x, y, LeftOrRight) => this.squareClickHandler(x, y, LeftOrRight)}
+            onClick={() => squareClickHandler(squares, i, j)}
             key={[i, j]}
             index={[i, j]}
             value={squares[i][j].value}
@@ -37,5 +59,10 @@ export const Container = () => {
     return res;
   };
 
-  return <div className="container">{renderSquares()}</div>;
+  return (
+    <>
+      <Toolbar />
+      <div className={clsx("container", { gameover: gameStatus === 2 })}>{renderSquares()}</div>;
+    </>
+  );
 };

@@ -5,14 +5,46 @@
 }
 .App {
   font-family: sans-serif;
-  text-align: center;
+  /* text-align: center; */
 }
 
+.container {
+  outline: 1px solid red;
+  margin: 10px auto;
+
+  flex-wrap: wrap;
+
+  /*   height:100vh; */
+  width: 600px;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  /*   overflow:auto; */
+  align-content: start;
+  /* background: linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5)),
+    url(https://images.all-free-download.com/images/graphiclarge/freehand_funny_skull_54955.jpg), rgba(255, 0, 0, 0.5); */
+}
+
+.container div {
+  user-select: none;
+}
+
+.gameover {
+  pointer-events: none;
+}
+
+/* timer */
+
+.timer {
+  font-size: 2rem;
+  margin: 1rem;
+}
 .square {
   flex: 1 1 1;
   width: 30px;
   height: 30px;
   border: 1px solid skyblue;
+  background-color: #000;
   text-align: center;
   /*   vertical-align:center; */
   display: flex;
@@ -25,18 +57,7 @@
   color: white;
 }
 
-.container {
-  outline: 1px solid red;
-  margin: 50px auto;
-  flex-wrap: wrap;
-  background-color: yellow;
-  /*   height:100vh; */
-  width: 600px;
-  display: flex;
-  justify-content: start;
-  align-items: start;
-  /*   overflow:auto; */
-  align-content: start;
-  /* background: linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0.5)),
-    url(https://images.all-free-download.com/images/graphiclarge/freehand_funny_skull_54955.jpg), rgba(255, 0, 0, 0.5); */
+.visited {
+  color: #fff;
+  background-color: darkcyan;
 }

@@ -5,7 +5,7 @@
  * @returns
  */
 export const initGame = () => {
-  let hardLevel = 0.95;
+  let hardLevel = 0.8; // The smaller the harder
   let squaresCountX = 25;
   let squaresCountY = 20;
   let winCount = 0;
@@ -21,13 +21,16 @@ export const initGame = () => {
         {
           length: squaresCountY,
         },
-        () => (Math.random() > hardLevel ? { value: -1, displayValue: "" } : { value: 0, displayValue: "" })
+        () =>
+          Math.random() > hardLevel
+            ? { value: -1, displayValue: "", visited: false }
+            : { value: 0, displayValue: "", visited: false }
       )
   );
-  console.log("zzzzz--------------->", arr);
+  // console.log("zzzzz--------------->", arr);
   // update boom count of neighbours
   const [m, n] = [arr.length, arr[0].length];
-  console.log("zzzzz--------------->", m, n);
+  // console.log("zzzzz--------------->", m, n);
   for (let i = 0; i < m; i++) {
     for (let j = 0; j < n; j++) {
       const x = arr[i][j];
@@ -62,9 +65,13 @@ const updateNeighbours = (arr, x, y) => {
   arr[x][y].value++;
 };
 
-const updateZero = (arr, x, y) => {
+export const updateZero = (arr, x, y) => {
   const [m, n] = [arr.length, arr[0].length];
-  if (x < 0 || y < 0 || x >= m || y >= n || arr[x][y].visited === true || arr[x][y].value !== 0) {
+  if (x < 0 || y < 0 || x >= m || y >= n || arr[x][y].visited === true) {
+    return;
+  }
+  if (arr[x][y].value !== 0) {
+    arr[x][y].displayValue = arr[x][y].value;
     return;
   }
   // this.unlockCount++;
@@ -72,14 +79,29 @@ const updateZero = (arr, x, y) => {
   //   this.gameWin();
   // }
   arr[x][y].visited = true;
-  arr[x][y].displayValue = 0;
+  arr[x][y].displayValue = " ";
 
-  updateZero(arr, visited, x + 1, y); // left
-  updateZero(arr, visited, x - 1, y); // right
-  updateZero(arr, visited, x, y + 1); // top
-  updateZero(arr, visited, x, y - 1); // bottom
-  updateZero(arr, visited, x + 1, y + 1); // top left
-  updateZero(arr, visited, x - 1, y - 1); // bottom right
-  updateZero(arr, visited, x + 1, y - 1); // bottom left
-  updateZero(arr, visited, x - 1, y + 1); // top right
+  updateZero(arr, x + 1, y); // left
+  updateZero(arr, x - 1, y); // right
+  updateZero(arr, x, y + 1); // top
+  updateZero(arr, x, y - 1); // bottom
+  updateZero(arr, x + 1, y + 1); // top left
+  updateZero(arr, x - 1, y - 1); // bottom right
+  updateZero(arr, x + 1, y - 1); // bottom left
+  updateZero(arr, x - 1, y + 1); // top right
+};
+
+export const gameOver = (arr) => {
+  return arr.map((row) =>
+    row.map((col) => {
+      if (col.value === -1) {
+        col.displayValue = "💣";
+      }
+      return col;
+    })
+  );
+};
+
+export const shallowClone2DArray = (arr) => {
+  return arr.map((row) => row.slice());
 };

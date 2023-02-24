@@ -55,7 +55,7 @@ class Square extends React.Component {
   render() {
     return (
       <div
-        className="square"
+        className={" visited"}
         data-value={this.props.value}
         // style={styles}
         data-index={this.props.index}

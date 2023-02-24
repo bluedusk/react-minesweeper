@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./styles.css";
+import clsx from "clsx";
 
 /**
  *
@@ -14,18 +15,19 @@ import "./styles.css";
  * @param {*} param0
  * @returns
  */
-export const Square = ({ value, displayValue }) => {
+export const Square = ({ value, displayValue, onClick }) => {
   const [mouseIn, setMouseIn] = useState(false);
 
   return (
     <div
-      className="square"
+      className={clsx("square", { visited: displayValue !== "" })}
       onMouseOver={() => {
         setMouseIn(true);
       }}
       onMouseOut={() => {
         setMouseIn(false);
       }}
+      onClick={onClick}
     >
       {mouseIn ? value : displayValue}
     </div>

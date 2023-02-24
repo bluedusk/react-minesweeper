@@ -7,3 +7,8 @@
   text-align: center;
   line-height: 100px;
 }
+
+.visited {
+  background-color: #000;
+  color: #fff;
+}
